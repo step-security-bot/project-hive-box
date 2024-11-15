@@ -17,8 +17,10 @@ jobs:
       # You can test your matrix by printing the current Go version
       - name: Test go app
         run: |
-          for file in $(ls -d */); do
+          for folder in $(ls -d */); do
+            cd $folder
             go test
+            cd ..
           done
         working-directory: src/
 
