@@ -1,11 +1,11 @@
-name: Test Go
+name: Test handlers
 
 on: pull_request
 
 
 
 jobs:
-  test:
+  test-handlers:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,10 +17,6 @@ jobs:
       # You can test your matrix by printing the current Go version
       - name: Test go app
         run: |
-          for folder in $(ls -d */); do
-            cd $folder
-            go test
-            cd ..
-          done
-        working-directory: src/
+          go test
+        working-directory: src/handlers
 
