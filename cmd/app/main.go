@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 
 	"github.com/Jorik-VanLooy/project-hive-box/handlers"
 )
 
 func main() {
-	str := handlers.PrintHello()
-	fmt.Println(str)
+	http.HandleFunc("/version", handlers.GetVersion)
+	http.ListenAndServe(":3333", nil)
 }
