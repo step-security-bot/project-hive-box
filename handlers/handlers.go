@@ -3,8 +3,10 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"os"
 )
 
 func GetVersion(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "v0.0.1")
+	golangVersion := os.Getenv("VERSION")
+	fmt.Fprintf(w, golangVersion)
 }

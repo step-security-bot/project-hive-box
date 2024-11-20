@@ -7,6 +7,9 @@ WORKDIR /app
 COPY /cmd/app/go.mod /cmd/app/go.sum ./
 RUN go mod download
 
+# export version as environment variable
+ENV VERSION=GOLANG_VER
+
 # Copy the source code. Note the slash at the end, as explained in
 # https://docs.docker.com/reference/dockerfile/#copy
 COPY /cmd/app/*.go ./
