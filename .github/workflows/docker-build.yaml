@@ -24,6 +24,9 @@ jobs:
     if: startsWith(github.ref, 'refs/tags')
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_DEPLOY_TOKEN }}
       - name: set version
         id: set-version
         run: |
@@ -55,9 +58,13 @@ jobs:
 
       - name: update kubernetes manifest
         run: |
+          git config --global user.name "Jorik-VanLooy"
+          git config --global user.email "jorik716@gmail.com"
+          git fetch
+          git checkout main
+
           sed -i 's/v[0-9]\+\.[0-9]\+\.[0-9]\+/${{ steps.set-version.outputs.docker-tag }}/g' kubernetes/backend.yaml
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
           git add kubernetes/*
           git commit -a -m "bump: update version"
-          git push
+          git push -f
