@@ -1,4 +1,4 @@
-name: golang-pipeline
+name: create release
 on:
   workflow_dispatch:
     inputs:
@@ -22,7 +22,7 @@ jobs:
           fi
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: check_vers
 
     if: github.ref == 'refs/heads/main'
     steps:
