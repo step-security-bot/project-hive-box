@@ -1,0 +1,24 @@
+name: Test handlers
+
+on:
+  push:
+    branches:
+      - "main"
+
+
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Semver release
+        uses: cocogitto/cocogitto-action@main
+        with:
+          check-latest-tag-only: true
+          release: true
+          git-user: 'Cog Bot'
+          git-user-email: 'mycoolproject@org.org'
