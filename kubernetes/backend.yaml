@@ -9,17 +9,17 @@ spec:
   replicas: 1
   # Define the selector to match the app pod labels
   selector:
-  matchLabels:
-   app: project-hive-box
+    matchLabels:
+      app: project-hive-box
   # Define the template for the app pod
   template:
-   metadata:
+    metadata:
     # Set the labels for the app pod
-    labels:
-     app: project-hive-box
+      labels:
+        app: project-hive-box
     spec:
-     # Define the container for the app pod
-     containers:
+      # Define the container for the app pod
+      containers:
       - name: project-hive-box
         # Use the image built from the Dockerfile
         image: project-hive-box:v0.0.0
@@ -27,8 +27,8 @@ spec:
         # This assumes that the image is already present on the node
         # Change this to Always or IfNotPresent if the image is pulled from a registry
         imagePullPolicy: Never
-        # Expose port 3000 on the container
-        containerPort: 3000
+        ports:
+        - containerPort: 3333
 # Define a service resource for the apps
 ---
 apiVersion: v1
