@@ -1,0 +1,51 @@
+# Define a deployment resource for the app
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Name the deployment as argocd-demo-app
+  name: project-hive-box
+spec:
+  # Create one replica of the app pod
+  replicas: 1
+  # Define the selector to match the app pod labels
+  selector:
+  matchLabels:
+   app: project-hive-box
+  # Define the template for the app pod
+  template:
+   metadata:
+    # Set the labels for the app pod
+    labels:
+     app: project-hive-box
+    spec:
+     # Define the container for the app pod
+     containers:
+      - name: project-hive-box
+        # Use the image built from the Dockerfile
+        image: project-hive-box:v0.0.0
+        # Set the image pull policy to Never
+        # This assumes that the image is already present on the node
+        # Change this to Always or IfNotPresent if the image is pulled from a registry
+        imagePullPolicy: Never
+        # Expose port 3000 on the container
+        containerPort: 3000
+# Define a service resource for the apps
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # Name the service as argocd-demo-app
+  name: project-hive-box
+spec:
+  # Set the service type to NodePort
+  # This will expose the service on a port on each node
+  type: ClusterIP
+  # Define the selector to match the app pod labels
+  selector:
+    app: project-hive-box
+  # Define the ports for the service
+  ports:
+  - name: http
+    # Expose port 80 on the service
+    port: 3333
+    # Target port 3000 on the app pod
